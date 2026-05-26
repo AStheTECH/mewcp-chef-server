@@ -12,11 +12,15 @@ from chef_server_mcp.tools import register_tools
 configure_logging()
 logger = logging.getLogger("chef-server-mcp-server")
 
-mcp = FastMCP("CL Chef Server MCP Server")
+mcp = FastMCP(
+    "MewCP Chef Server MCP Server",
+    # stateless_http=True,
+)
 register_tools(mcp)
 
 # Expose ASGI app for hosting platform's (e.g. Vercel) Python runtime.
-app = mcp.http_app(path="/mcp", transport="streamable-http")
+# Expose ASGI app for hosting platform's (e.g. Vercel) Python runtime.
+app = mcp.http_app(path="/mcp", transport="streamable-http", stateless_http=True)
 
 if __name__ == "__main__":
     logger.info("=" * 60)
